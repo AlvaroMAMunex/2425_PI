@@ -39,6 +39,7 @@ async def login(data: dict, response: Response, provider: str):
         #print(user_id)
         #print(provider)
         session_id = str(uuid.uuid4())
+        #Faltaría asignar vigencia a la sesión
         sessions[session_id] = {"user_id": user_id, "type": provider}
         response.set_cookie(key="session_id", value=session_id, httponly=True)
         return {"success": True}
@@ -57,6 +58,7 @@ async def login_google(data: dict, response: Response):
 async def perfil(request: Request):
     print("PERFIL")
     session_id = request.cookies.get("session_id")
+    #Faltaría comprobar la vigencia a la sesión
     if session_id in sessions:
         user_id = sessions[session_id]["user_id"]
         print(user_id)
